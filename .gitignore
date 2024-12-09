@@ -1,0 +1,17 @@
+# Generated files and folders
+/public/
+/resources/_gen/
+/hugo_stats.json
+
+# /themes/
+
+*.swp
+*.swo
+*.tmp
+
+node_modules/
+package-lock.json
+yarn.lock
+
+hugo_server.log
+.hugo_build.lock
