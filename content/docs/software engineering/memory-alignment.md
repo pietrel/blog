@@ -92,37 +92,53 @@ fmt.Printf("Size of First: %d bytes\n", unsafe.Sizeof(First{}))
     Size of First: 24 bytes
     Size of Second: 16 bytes
 
-Now let's compare the memory access times for the two structs. Let's create simple function to populate the struct
-fields with consecutive numbers and sum them up.
+Now let's compare the memory access times for the two structs. Let's create simple function to populate the struct fields with consecutive numbers.
 
 ```go
 func populate[T TestSubject]() ([]T, time.Duration) {
-t := reflect.TypeOf((*T)(nil)).Elem().Name()
-start := time.Now()
-var subjects []T
-for i := 0; i < NumStructs; i++ {
-subjects = append(subjects, newStruct(t, i).(T))
-}
-return subjects, time.Since(start)
+    t := reflect.TypeOf((*T)(nil)).Elem().Name()
+    start := time.Now()
+    var subjects []T
+    for i := 0; i < NumStructs; i++ {
+        subjects = append(subjects, newStruct(t, i).(T))
+    }
+    return subjects, time.Since(start)
 }
 ```
+
+The populate function creates an array of structs of type T and populates the fields with consecutive numbers. The newStruct function is a helper function that creates a new struct of the specified type and populates the fields with the given value.
 
 ```go
-func iterate[T TestSubject](subjects []T) (int, time.Duration) {
-start := time.Now()
-sum := 0
-for _, s := range subjects {
-sum += s.sum()
-}
-return sum, time.Since(start)
+func newStruct(t string, i int) TestSubject {
+    switch t {
+    case "First":
+        return First{A: uint8(i), B: uint64(i), C: uint16(i)}
+    case "Second":
+        return Second{B: uint64(i), C: uint16(i), A: uint8(i)}
+    default:
+        panic("Unknown struct type")    
+    }
 }
 ```
 
-TestSubject interface is defined as follows:
+TestSubject interface is implemented by First and Second struct and is defined as follows:
 
 ```go
 type TestSubject interface {
-sum() int
+    sum() int
+}
+```
+
+The sum method is implemented by both First and Second structs and returns the sum of the fields.
+
+```go
+func iterate[T TestSubject](subjects []T) (int, time.Duration) {
+    start := time.Now()
+    sum := 0
+    for _, s := range subjects {
+        sum += s.sum()
+    }
+    return sum, time.Since(start)
 }
 ```
 
