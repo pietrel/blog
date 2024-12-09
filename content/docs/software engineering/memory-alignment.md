@@ -46,9 +46,9 @@ Let's consider an example in go to illustrate this point. Suppose you have a str
 
 ```go
 type First struct {
-A uint8  // Uses 1 byte, followed by 7 bytes of padding to align the next field
-B uint64 // 8-byte aligned uint64 for the passport ID
-C uint16 //2-byte aligned uint16
+    A uint8  // Uses 1 byte, followed by 7 bytes of padding to align the next field
+    B uint64 // 8-byte aligned uint64 for the passport ID
+    C uint16 //2-byte aligned uint16
 }
 ```
 
@@ -59,9 +59,9 @@ additional padding is required for `C`. This results in structure that is 24 byt
 
 ```go
 type Second struct {
-B uint64 // 8 bytes
-C uint16 // 2 bytes
-A uint8  // 1 byte
+    B uint64 // 8 bytes
+    C uint16 // 2 bytes
+    A uint8  // 1 byte
 }
 ```
 
