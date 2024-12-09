@@ -133,7 +133,5 @@ Number of structs to create is defined to be 1_000_000.
     Iterated over array of First structs in 2.010232ms
     Iterated over array of Second structs in 1.52971ms
 
-As we can see, the Second struct, which is optimized for memory alignment, has better performance compared to the First
-struct. This is because the fields in the Second struct are ordered in such a way that they are aligned on the correct
-boundaries, resulting in faster memory access times.
+As we can see, the Second struct, which is optimized for memory alignment, has better performance compared to the First struct. This is because the fields in the Second struct are ordered in such a way that they are aligned on the correct boundaries, resulting in faster memory access times.
 
